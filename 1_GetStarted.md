@@ -1,136 +1,157 @@
-Här är hela **Lab 3a** som du bad om, utskriven på nytt i sin helhet:
+## Lab 1
 
----
-
-## Lab 3a
-
-**Query Multiple Tables with Joins**
-In this exercise, you'll use the Transact-SQL SELECT statement to query multiple tables in the AdventureWorks database.
+**Get Started with Transact-SQL**
+In this exercise, you will use some basic SELECT queries to retrieve data from the AdventureWorks database.
 
 > **Note**: This exercise assumes you have created the sample AdventureWorks database.
 
 ---
 
-### Use inner joins
+### Use SELECT queries to retrieve data
+
+The SELECT statement is the primary Transact-SQL statement used to query tables in a database.
 
 Open a query editor for your AdventureWorks database, and create a new query.
 
 ```sql
-SELECT SalesLT.Product.Name AS ProductName, SalesLT.ProductCategory.Name AS Category
-FROM SalesLT.Product
-INNER JOIN SalesLT.ProductCategory
-ON SalesLT.Product.ProductCategoryID = SalesLT.ProductCategory.ProductCategoryID;
+SELECT * FROM SalesLT.Product;
 ```
 
-Remove the `INNER` keyword and re-run it:
+Run the query, and and after a few seconds, review the results, which includes all columns for all products.
+
+In the query editor, modify the query as follows:
 
 ```sql
-SELECT SalesLT.Product.Name AS ProductName, SalesLT.ProductCategory.Name AS Category
-FROM SalesLT.Product
-JOIN SalesLT.ProductCategory
-    ON SalesLT.Product.ProductCategoryID = SalesLT.ProductCategory.ProductCategoryID;
+SELECT Name, StandardCost, ListPrice
+FROM SalesLT.Product;
 ```
 
-Add table aliases:
+Re-run the query, and and after a few seconds, review the results, which this time include only the Name, StandardCost, and ListPrice columns for all products.
+
+Modify the query as shown below to include an expression that results in a calculated column, and then re-run the query:
 
 ```sql
-SELECT p.Name AS ProductName, c.Name AS Category
-FROM SalesLT.Product AS p
-JOIN SalesLT.ProductCategory AS c
-    ON p.ProductCategoryID = c.ProductCategoryID;
+SELECT Name, ListPrice - StandardCost
+FROM SalesLT.Product;
 ```
 
-Query three tables:
+Modify the query as shown below to assign names to the columns in the results, and then re-run the query.
 
 ```sql
-SELECT oh.OrderDate, oh.PurchaseOrderNumber, p.Name AS ProductName, od.OrderQty, od.UnitPrice
-FROM SalesLT.SalesOrderHeader AS oh
-JOIN SalesLT.SalesOrderDetail AS od
-    ON od.SalesOrderID = oh.SalesOrderID
-JOIN SalesLT.Product AS p
-    ON od.ProductID = p.ProductID
-ORDER BY oh.OrderDate, oh.SalesOrderID, od.SalesOrderDetailID;
+SELECT Name AS ProductName, ListPrice - StandardCost AS Markup
+FROM SalesLT.Product;
 ```
 
----
-
-### Use outer joins
+Replace the existing query with the following code, which also includes an expression that produces a calculated column in the results:
 
 ```sql
-SELECT c.FirstName, c.LastName, oh.PurchaseOrderNumber
-FROM SalesLT.Customer AS c
-LEFT OUTER JOIN SalesLT.SalesOrderHeader AS oh
-    ON c.CustomerID = oh.CustomerID
-ORDER BY c.CustomerID;
-```
-
-Remove `OUTER` keyword:
-
-```sql
-SELECT c.FirstName, c.LastName, oh.PurchaseOrderNumber
-FROM SalesLT.Customer AS c
-LEFT JOIN SalesLT.SalesOrderHeader AS oh
-    ON c.CustomerID = oh.CustomerID
-ORDER BY c.CustomerID;
-```
-
-Show only customers with no orders:
-
-```sql
-SELECT c.FirstName, c.LastName, oh.PurchaseOrderNumber
-FROM SalesLT.Customer AS c
-LEFT JOIN SalesLT.SalesOrderHeader AS oh
-    ON c.CustomerID = oh.CustomerID
-WHERE oh.SalesOrderNumber IS NULL 
-ORDER BY c.CustomerID;
-```
-
-Join three tables with outer joins:
-
-```sql
-SELECT p.Name As ProductName, oh.PurchaseOrderNumber
-FROM SalesLT.Product AS p
-LEFT JOIN SalesLT.SalesOrderDetail AS od
-    ON p.ProductID = od.ProductID
-LEFT JOIN SalesLT.SalesOrderHeader AS oh
-    ON od.SalesOrderID = oh.SalesOrderID
-ORDER BY p.ProductID;
-```
-
-Mix with inner join:
-
-```sql
-SELECT p.Name As ProductName, c.Name AS Category, oh.PurchaseOrderNumber
-FROM SalesLT.Product AS p
-LEFT OUTER JOIN SalesLT.SalesOrderDetail AS od
-    ON p.ProductID = od.ProductID
-LEFT OUTER JOIN SalesLT.SalesOrderHeader AS oh
-    ON od.SalesOrderID = oh.SalesOrderID
-INNER JOIN SalesLT.ProductCategory AS c
-    ON p.ProductCategoryID = c.ProductCategoryID
-ORDER BY p.ProductID;
+SELECT ProductNumber, Color, Size, Color + ', ' + Size AS ProductDetails
+FROM SalesLT.Product;
 ```
 
 ---
 
-### Use a cross join
+### Work with data types
+
+Replace the existing query with the following code, and run it:
 
 ```sql
-SELECT p.Name, c.FirstName, c.LastName, c.EmailAddress
-FROM SalesLT.Product AS p
-CROSS JOIN SalesLT.Customer AS c;
+SELECT ProductID + ': ' + Name AS ProductName
+FROM SalesLT.Product; 
+```
+
+Modify the query as follows, and re-run it:
+
+```sql
+SELECT CAST(ProductID AS varchar(5)) + ': ' + Name AS ProductName
+FROM SalesLT.Product; 
+```
+
+Modify the query to replace the CAST function with a CONVERT function as shown below, and then re-run it:
+
+```sql
+SELECT CONVERT(varchar(5), ProductID) + ': ' + Name AS ProductName
+FROM SalesLT.Product; 
+```
+
+Another key difference between the two functions is that CONVERT includes an additional parameter that can be useful for formatting date and time values when converting them to text-based data. For example:
+
+```sql
+SELECT SellStartDate,
+   CONVERT(nvarchar(30), SellStartDate) AS ConvertedDate,
+   CONVERT(nvarchar(30), SellStartDate, 126) AS ISO8601FormatDate
+FROM SalesLT.Product; 
+```
+
+Replace the existing query with the following code, and run it:
+
+```sql
+SELECT Name, CAST(Size AS Integer) AS NumericSize
+FROM SalesLT.Product; 
+```
+
+Modify the query to use a TRY\_CAST function, as shown here:
+
+```sql
+SELECT Name, TRY_CAST(Size AS Integer) AS NumericSize
+FROM SalesLT.Product; 
 ```
 
 ---
 
-### Use a self join
+### Handle NULL values
+
+Modify the existing query as shown here:
 
 ```sql
-SELECT pcat.Name AS ParentCategory, cat.Name AS SubCategory
-FROM SalesLT.ProductCategory AS cat
-JOIN SalesLT.ProductCategory pcat
-    ON cat.ParentProductCategoryID = pcat.ProductCategoryID
-ORDER BY ParentCategory, SubCategory;
+SELECT Name, ISNULL(TRY_CAST(Size AS Integer),0) AS NumericSize
+FROM SalesLT.Product;
+```
+
+Replace the query with the following code:
+
+```sql
+SELECT ProductNumber, ISNULL(Color, '') + ', ' + ISNULL(Size, '') AS ProductDetails
+FROM SalesLT.Product;
+```
+
+Try the following query, which replaces the Color value "Multi" to NULL.
+
+```sql
+SELECT Name, NULLIF(Color, 'Multi') AS SingleColor
+FROM SalesLT.Product;
+```
+
+Use the following query to find the first non-NULL date for product selling status.
+
+```sql
+SELECT Name, COALESCE(SellEndDate, SellStartDate) AS StatusLastUpdated
+FROM SalesLT.Product;
+```
+
+Run the following query, which includes searched CASE:
+
+```sql
+SELECT Name,
+    CASE
+        WHEN SellEndDate IS NULL THEN 'Currently for sale'
+        ELSE 'No longer available'
+    END AS SalesStatus
+FROM SalesLT.Product;
+```
+
+Run the following query to see an example of a simple CASE expression:
+
+```sql
+SELECT Name,
+    CASE Size
+        WHEN 'S' THEN 'Small'
+        WHEN 'M' THEN 'Medium'
+        WHEN 'L' THEN 'Large'
+        WHEN 'XL' THEN 'Extra-Large'
+        ELSE ISNULL(Size, 'n/a')
+    END AS ProductSize
+FROM SalesLT.Product;
 ```
 
 ---
@@ -139,19 +160,36 @@ ORDER BY ParentCategory, SubCategory;
 
 > **Tip**: Try to determine the appropriate queries for yourself. If you get stuck, suggested answers are provided at the end of this lab.
 
-### Challenge 1: Generate invoice reports
+### Challenge 1: Retrieve customer data
 
-* Retrieve company name, purchase order number, and total due from customer and order tables.
-* Extend query to include full main office address by joining CustomerAddress and Address.
+* **Retrieve customer details**
+* **Retrieve customer name data**
+* **Retrieve customer names and phone numbers**
 
-### Challenge 2: Retrieve customer data
+### Challenge 2: Retrieve customer order data
 
-* Retrieve all customer companies and contacts, with order details. Include customers with no orders.
-* Retrieve list of customers with no address.
+* **Retrieve a list of customer companies**
+* **Retrieve a list of sales order revisions**
 
-### Challenge 3: Create a product catalog
+### Challenge 3: Retrieve customer contact details
 
-* Retrieve parent category, subcategory, and product name.
+* **Retrieve customer contact names with middle names if known**
+* **Retrieve primary contact details**
+* **Retrieve shipping status**
+
+> **Note**: Use the following before queries to test NULL handling:
+
+```sql
+UPDATE SalesLT.Customer
+SET EmailAddress = NULL
+WHERE CustomerID % 7 = 1;
+```
+
+```sql
+UPDATE SalesLT.SalesOrderHeader
+SET ShipDate = NULL
+WHERE SalesOrderID > 71899;
+```
 
 ---
 
@@ -160,66 +198,53 @@ ORDER BY ParentCategory, SubCategory;
 ### Challenge 1
 
 ```sql
-SELECT c.CompanyName,
-       oh.PurchaseOrderNumber,
-       oh.SubTotal + oh.TaxAmt + oh.Freight As TotalDue
-FROM SalesLT.Customer AS c
-JOIN SalesLT.SalesOrderHeader AS oh
-    ON oh.CustomerID = c.CustomerID;
+SELECT * FROM SalesLT.Customer;
 ```
 
 ```sql
-SELECT c.CompanyName,
-       a.AddressLine1,
-       ISNULL(a.AddressLine2, '') AS AddressLine2,
-       a.City,
-       a.StateProvince,
-       a.PostalCode,
-       a.CountryRegion,
-       oh.PurchaseOrderNumber,
-       oh.SubTotal + oh.TaxAmt + oh.Freight As TotalDue
-FROM SalesLT.Customer AS c
-JOIN SalesLT.SalesOrderHeader AS oh
-    ON oh.CustomerID = c.CustomerID
-JOIN SalesLT.CustomerAddress AS ca
-    ON c.CustomerID = ca.CustomerID
-JOIN SalesLT.Address AS a
-    ON ca.AddressID = a.AddressID
-WHERE ca.AddressType = 'Main Office';
+SELECT Title, FirstName, MiddleName, LastName, Suffix
+FROM SalesLT.Customer;
+```
+
+```sql
+SELECT Salesperson, ISNULL(Title,'') + ' ' + LastName AS CustomerName, Phone
+FROM SalesLT.Customer;
 ```
 
 ### Challenge 2
 
 ```sql
-SELECT c.CompanyName, c.FirstName, c.LastName,
-       oh.PurchaseOrderNumber,
-       oh.SubTotal + oh.TaxAmt + oh.Freight As TotalDue
-FROM SalesLT.Customer AS c
-LEFT JOIN SalesLT.SalesOrderHeader AS oh
-    ON c.CustomerID = oh.CustomerID
-ORDER BY oh.PurchaseOrderNumber DESC;
+SELECT CAST(CustomerID AS varchar) + ': ' + CompanyName AS CustomerCompany
+FROM SalesLT.Customer;
 ```
 
 ```sql
-SELECT c.CompanyName, c.FirstName, c.LastName, c.Phone
-FROM SalesLT.Customer AS c
-LEFT JOIN SalesLT.CustomerAddress AS ca
-    ON c.CustomerID = ca.CustomerID
-WHERE ca.AddressID IS NULL;
+SELECT PurchaseOrderNumber + ' (' + STR(RevisionNumber, 1) + ')' AS OrderRevision,
+   CONVERT(nvarchar(30), OrderDate, 102) AS OrderDate
+FROM SalesLT.SalesOrderHeader;
 ```
 
 ### Challenge 3
 
 ```sql
-SELECT pcat.Name AS ParentCategory, cat.Name AS SubCategory, prd.Name AS ProductName
-FROM SalesLT.ProductCategory pcat
-JOIN SalesLT.ProductCategory AS cat
-    ON pcat.ProductCategoryID = cat.ParentProductCategoryID
-JOIN SalesLT.Product AS prd
-    ON prd.ProductCategoryID = cat.ProductCategoryID
-ORDER BY ParentCategory, SubCategory, ProductName;
+SELECT FirstName + ' ' + ISNULL(MiddleName + ' ', '') + LastName AS CustomerName
+FROM SalesLT.Customer;
+```
+
+```sql
+SELECT CustomerID, COALESCE(EmailAddress, Phone) AS PrimaryContact
+FROM SalesLT.Customer;
+```
+
+```sql
+SELECT SalesOrderID, OrderDate,
+    CASE
+        WHEN ShipDate IS NULL THEN 'Awaiting Shipment'
+        ELSE 'Shipped'
+    END AS ShippingStatus
+FROM SalesLT.SalesOrderHeader;
 ```
 
 ---
 
-Vill du att jag tar Lab 4 också?
+*End of Lab 1 Instructions, Challenges, and Solutions*
