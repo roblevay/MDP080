@@ -230,4 +230,76 @@ WHERE SalesOrderID > 71899;
 
 ---
 
-*End of Lab 1 Instructions and Challenges*
+## Challenge Solutions
+
+This section contains suggested solutions for the challenge queries.
+
+### Challenge 1
+
+**Retrieve customer details:**
+
+```sql
+SELECT * FROM SalesLT.Customer;
+```
+
+**Retrieve customer name data:**
+
+```sql
+SELECT Title, FirstName, MiddleName, LastName, Suffix
+FROM SalesLT.Customer;
+```
+
+**Retrieve customer names and phone numbers:**
+
+```sql
+SELECT Salesperson, ISNULL(Title,'') + ' ' + LastName AS CustomerName, Phone
+FROM SalesLT.Customer;
+```
+
+### Challenge 2
+
+**Retrieve a list of customer companies:**
+
+```sql
+SELECT CAST(CustomerID AS varchar) + ': ' + CompanyName AS CustomerCompany
+FROM SalesLT.Customer;
+```
+
+**Retrieve a list of sales order revisions:**
+
+```sql
+SELECT PurchaseOrderNumber + ' (' + STR(RevisionNumber, 1) + ')' AS OrderRevision,
+   CONVERT(nvarchar(30), OrderDate, 102) AS OrderDate
+FROM SalesLT.SalesOrderHeader;
+```
+
+### Challenge 3
+
+**Retrieve customer contact names with middle names if known:**
+
+```sql
+SELECT FirstName + ' ' + ISNULL(MiddleName + ' ', '') + LastName AS CustomerName
+FROM SalesLT.Customer;
+```
+
+**Retrieve primary contact details:**
+
+```sql
+SELECT CustomerID, COALESCE(EmailAddress, Phone) AS PrimaryContact
+FROM SalesLT.Customer;
+```
+
+**Retrieve shipping status:**
+
+```sql
+SELECT SalesOrderID, OrderDate,
+    CASE
+        WHEN ShipDate IS NULL THEN 'Awaiting Shipment'
+        ELSE 'Shipped'
+    END AS ShippingStatus
+FROM SalesLT.SalesOrderHeader;
+```
+
+---
+
+*End of Lab 1 Instructions, Challenges, and Solutions*
