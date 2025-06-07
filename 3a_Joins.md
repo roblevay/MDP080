@@ -216,7 +216,5 @@ JOIN SalesLT.Product AS prd
 ORDER BY ParentCategory, SubCategory, ProductName;
 ```
 
----
 
-Vill du att jag tar Lab 4 också?
 
