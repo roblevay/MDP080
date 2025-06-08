@@ -1,6 +1,4 @@
----
-Querying Data with Microsoft Transact-SQL
-16 Hours Remaining
+
 Lab 1
 Get Started with Transact-SQL
 In this exercise, you will use some basic SELECT queries to retrieve data from the AdventureWorks database.
@@ -14,7 +12,6 @@ Open a query editor for your AdventureWorks database, and create a new query.
 
 In the query editor, enter the following code:
 
-```
 ```
 sql
 SELECT * FROM SalesLT.Product;
