@@ -23,3 +23,9 @@ https://learn.microsoft.com/training/courses/dp-080t00?WT.mc_id=ilt_partner_webp
 Achievement badge
 
 https://learn.microsoft.com/en-us/users/me/achievements?WT.mc_id=ilt_partner_webpage_wwl&ocid=501095&redeem=RJQZG5
+
+---------------------------------------------------------------------------------
+
+Zoom länk.
+
+https://liveclass.zoom.us/j/89592359738?pwd=dz3aKOpk9jHfulxNHmxA8NbnhrdCc6.1
