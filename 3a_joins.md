@@ -1,24 +1,31 @@
-## Lab 3a
+---
 
-**Query Multiple Tables with Joins**
-In this exercise, you'll use the Transact-SQL SELECT statement to query multiple tables in the AdventureWorks database.
+````markdown
+# Lab 3a  
+## Query Multiple Tables with Joins  
+In this exercise, you'll use the Transact-SQL `SELECT` statement to query multiple tables in the AdventureWorks database.
 
-> **Note**: This exercise assumes you have created the sample AdventureWorks database.
+> **Note:** This exercise assumes you have created the sample AdventureWorks database.
 
 ---
 
-### Use inner joins
+### Use inner joins  
+An inner join is used to find related data in two tables. For example, suppose you need to retrieve data about a product and its category from the `SalesLT.Product` and `SalesLT.ProductCategory` tables. You can find the relevant product category record for a product based on its `ProductCategoryID` field; which is a foreign-key in the product table that matches a primary key in the product category table.
 
 Open a query editor for your AdventureWorks database, and create a new query.
+
+In the query editor, enter the following code:
 
 ```sql
 SELECT SalesLT.Product.Name AS ProductName, SalesLT.ProductCategory.Name AS Category
 FROM SalesLT.Product
 INNER JOIN SalesLT.ProductCategory
 ON SalesLT.Product.ProductCategoryID = SalesLT.ProductCategory.ProductCategoryID;
-```
+````
 
-Remove the `INNER` keyword and re-run it:
+Run the query, and after a few seconds, review the results, which include the `ProductName` from the products table and the corresponding `Category` from the product category table. Because the query uses an `INNER` join, any products that do not have corresponding categories, and any categories that contain no products are omitted from the results.
+
+Modify the query as follows to remove the `INNER` keyword, and re-run it.
 
 ```sql
 SELECT SalesLT.Product.Name AS ProductName, SalesLT.ProductCategory.Name AS Category
@@ -27,7 +34,9 @@ JOIN SalesLT.ProductCategory
     ON SalesLT.Product.ProductCategoryID = SalesLT.ProductCategory.ProductCategoryID;
 ```
 
-Add table aliases:
+The results should be the same as before. `INNER` joins are the default kind of join.
+
+Modify the query to assign aliases to the tables in the `JOIN` clause, as shown here:
 
 ```sql
 SELECT p.Name AS ProductName, c.Name AS Category
@@ -36,7 +45,9 @@ JOIN SalesLT.ProductCategory AS c
     ON p.ProductCategoryID = c.ProductCategoryID;
 ```
 
-Query three tables:
+Run the modified query and confirm that it returns the same results as before. The use of table aliases can greatly simplify a query, particularly when multiple joins must be used.
+
+Replace the query with the following code, which retrieves sales order data from the `SalesLT.SalesOrderHeader`, `SalesLT.SalesOrderDetail`, and `SalesLT.Product` tables:
 
 ```sql
 SELECT oh.OrderDate, oh.PurchaseOrderNumber, p.Name AS ProductName, od.OrderQty, od.UnitPrice
@@ -48,9 +59,15 @@ JOIN SalesLT.Product AS p
 ORDER BY oh.OrderDate, oh.SalesOrderID, od.SalesOrderDetailID;
 ```
 
+Run the modified query and note that it returns data from all three tables.
+
 ---
 
 ### Use outer joins
+
+An outer join is used to retrieve all rows from one table, and any corresponding rows from a related table. In cases where a row in the outer table has no corresponding rows in the related table, `NULL` values are returned for the related table fields.
+
+Example: retrieve a list of all customers and any orders they have placed, including customers who have registered but never placed an order.
 
 ```sql
 SELECT c.FirstName, c.LastName, oh.PurchaseOrderNumber
@@ -60,7 +77,9 @@ LEFT OUTER JOIN SalesLT.SalesOrderHeader AS oh
 ORDER BY c.CustomerID;
 ```
 
-Remove `OUTER` keyword:
+Note the use of the `LEFT` keyword. This identifies which of the tables in the join is the outer table (the one from which all rows should be preserved).
+
+Modify the query to remove the `OUTER` keyword:
 
 ```sql
 SELECT c.FirstName, c.LastName, oh.PurchaseOrderNumber
@@ -70,7 +89,7 @@ LEFT JOIN SalesLT.SalesOrderHeader AS oh
 ORDER BY c.CustomerID;
 ```
 
-Show only customers with no orders:
+Modify the query to return only customers who have not placed any orders:
 
 ```sql
 SELECT c.FirstName, c.LastName, oh.PurchaseOrderNumber
@@ -81,7 +100,7 @@ WHERE oh.SalesOrderNumber IS NULL
 ORDER BY c.CustomerID;
 ```
 
-Join three tables with outer joins:
+Replace the query with the following one, which uses outer joins to retrieve data from three tables:
 
 ```sql
 SELECT p.Name As ProductName, oh.PurchaseOrderNumber
@@ -93,7 +112,7 @@ LEFT JOIN SalesLT.SalesOrderHeader AS oh
 ORDER BY p.ProductID;
 ```
 
-Mix with inner join:
+Add an inner join to return category information:
 
 ```sql
 SELECT p.Name As ProductName, c.Name AS Category, oh.PurchaseOrderNumber
@@ -111,6 +130,8 @@ ORDER BY p.ProductID;
 
 ### Use a cross join
 
+A cross join matches all possible combinations of rows from the tables being joined.
+
 ```sql
 SELECT p.Name, c.FirstName, c.LastName, c.EmailAddress
 FROM SalesLT.Product AS p
@@ -121,12 +142,17 @@ CROSS JOIN SalesLT.Customer AS c;
 
 ### Use a self join
 
+A self join joins a table to itself by defining two instances of the table:
+
 ```sql
 SELECT pcat.Name AS ParentCategory, cat.Name AS SubCategory
 FROM SalesLT.ProductCategory AS cat
 JOIN SalesLT.ProductCategory pcat
     ON cat.ParentProductCategoryID = pcat.ProductCategoryID
 ORDER BY ParentCategory, SubCategory;
+```
+
+---
 ```
 
 ---
