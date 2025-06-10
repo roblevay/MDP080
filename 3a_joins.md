@@ -1,6 +1,3 @@
----
-
-```markdown
 # Lab 3a  
 ## Query Multiple Tables with Joins  
 In this exercise, you'll use the Transact-SQL `SELECT` statement to query multiple tables in the AdventureWorks database.
