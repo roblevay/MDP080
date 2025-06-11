@@ -214,7 +214,43 @@ ORDER BY Salesperson;
 
 ## Challenges
 
+Now it's time to try using functions to retrieve data in some queries of your own.
+
+> **Tip**: Try to determine the appropriate queries for yourself. If you get stuck, suggested answers are provided at the end of this lab.
+
 ### Challenge 1: Retrieve order shipping information
+
+The operations manager wants reports about order shipping based on data in the SalesLT.SalesOrderHeader table.
+
+* Retrieve the order ID and freight cost of each order.
+  Write a query to return the order ID for each order, together with the the Freight value rounded to two decimal places in a column named `FreightCost`.
+
+* Add the shipping method.
+  Extend your query to include a column named `ShippingMethod` that contains the `ShipMethod` field, formatted in lower case.
+
+* Add shipping date details.
+  Extend your query to include columns named `ShipYear`, `ShipMonth`, and `ShipDay` that contain the year, month, and day of the `ShipDate`. The `ShipMonth` value should be displayed as the month name (for example, June)
+
+### Challenge 2: Aggregate product sales
+
+The sales manager would like reports that include aggregated information about product sales.
+
+* Retrieve total sales by product
+  Write a query to retrieve a list of the product names from the `SalesLT.Product` table and the total number of sales of each product, calculated as the sum of `OrderQty` from the `SalesLT.SalesOrderDetail` table, with the results sorted in descending order of total sales.
+
+* Filter the product sales list to include only products that cost over 1,000
+  Modify the previous query to include only sales of products that have a list price of more than 1000.
+
+* Filter the product sales groups to include only products for which over 20 have been sold
+  Modify the previous query to only include only product groups with a total order quantity greater than 20.
+
+---
+
+## Challenge Solutions
+
+### Challenge 1
+
+Retrieve the order ID and freight cost of each order:
 
 ```sql
 SELECT SalesOrderID,
@@ -222,12 +258,16 @@ SELECT SalesOrderID,
 FROM SalesLT.SalesOrderHeader;
 ```
 
+Add the shipping method:
+
 ```sql
 SELECT SalesOrderID,
        ROUND(Freight, 2) AS FreightCost,
        LOWER(ShipMethod) AS ShippingMethod
 FROM SalesLT.SalesOrderHeader;
 ```
+
+Add shipping date details:
 
 ```sql
 SELECT SalesOrderID,
@@ -239,7 +279,11 @@ SELECT SalesOrderID,
 FROM SalesLT.SalesOrderHeader;
 ```
 
-### Challenge 2: Aggregate product sales
+### Challenge 2
+
+The product manager would like reports that include aggregated information about product sales.
+
+Retrieve total sales by product:
 
 ```sql
 SELECT p.Name,SUM(o.OrderQty) AS TotalSales
@@ -249,6 +293,8 @@ JOIN SalesLT.Product AS p
 GROUP BY p.Name
 ORDER BY TotalSales DESC;
 ```
+
+Filter the product sales list to include only products that cost over 1,000:
 
 ```sql
 SELECT p.Name,SUM(o.OrderQty) AS TotalSales
@@ -259,6 +305,8 @@ WHERE p.ListPrice > 1000
 GROUP BY p.Name
 ORDER BY TotalSales DESC;
 ```
+
+Filter the product sales groups to include only products for which over 20 have been sold:
 
 ```sql
 SELECT p.Name,SUM(o.OrderQty) AS TotalSales
