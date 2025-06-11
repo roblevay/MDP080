@@ -1,8 +1,21 @@
+# Lab 4
+
+## Use Built-in Functions
+
+... (document content unchanged) ...
+
+```
+HAVING SUM(o.OrderQty) > 20
+ORDER BY TotalSales DESC;
+```
+
+---
+
 ## Lab 5
 
-**Modify Data**
+## Modify Data
 
-In this exercise, you'll insert, update, and delete data in the Adventureworks database.
+In this exercise, you'll insert, update, and delete data in the AdventureWorks database.
 
 > **Note**: This exercise assumes you have created the sample AdventureWorks database.
 
@@ -10,11 +23,11 @@ In this exercise, you'll insert, update, and delete data in the Adventureworks d
 
 ### Insert data
 
-You use the INSERT statement to insert data into a table.
+You use the `INSERT` statement to insert data into a table.
 
 Open a query editor for your AdventureWorks database, and create a new query.
 
-In the query editor, enter the following code to create a new table named SalesLT.CallLog, which we'll use in this exercise.
+In the query editor, enter the following code:
 
 ```sql
 CREATE TABLE SalesLT.CallLog
@@ -27,6 +40,8 @@ CREATE TABLE SalesLT.CallLog
     Notes nvarchar(max) NULL
 );
 ```
+
+Run the code and create the table.
 
 Run the code and create the table. Don't worry too much about the details of the CREATE TABLE statement - it creates a table with some fields that we'll use in subsequent tasks to insert, update, and delete data.
 
@@ -43,19 +58,19 @@ Switch back to the query pane containing the CREATE TABLE statement, and replace
 ```sql
 INSERT INTO SalesLT.CallLog
 VALUES
-('2015-01-01T12:30:00', 'adventure-works\\pamela0', 1, '245-555-0173', 'Returning call re: enquiry about delivery');
+('2015-01-01T12:30:00', 'adventure-works\pamela0', 1, '245-555-0173', 'Returning call re: enquiry about delivery');
 ```
 
 Run the query and review the message, which should indicate that 1 row was affected.
 
-Switch to the query pane containing the SELECT query and run it. Note that the results contain the row you inserted. The CallID column is an identity column that is automatically incremented (so the first row has the value 1), and the remaining columns contain the values you specified in the INSERT statement
+Switch to the query pane containing the SELECT query and run it. Note that the results contain the row you inserted. The CallID column is an identity column that is automatically incremented (so the first row has the value 1), and the remaining columns contain the values you specified in the INSERT statement.
 
 Switch back to the query pane containing the INSERT statement, and replace it with the following code to insert another row. This time, the INSERT statement takes advantage of the fact that the table has a default value defined for the CallTime field, and allows NULL values in the Notes field.
 
 ```sql
 INSERT INTO SalesLT.CallLog
 VALUES
-(DEFAULT, 'adventure-works\\david8', 2, '170-555-0127', NULL);
+(DEFAULT, 'adventure-works\david8', 2, '170-555-0127', NULL);
 ```
 
 Run the query and review the message, which should indicate that 1 row was affected.
@@ -67,7 +82,7 @@ Switch back to the query pane containing the INSERT statement, and replace it wi
 ```sql
 INSERT INTO SalesLT.CallLog (SalesPerson, CustomerID, PhoneNumber)
 VALUES
-('adventure-works\\jillian0', 3, '279-555-0130');
+('adventure-works\jillian0', 3, '279-555-0130');
 ```
 
 Run the query and review the message, which should indicate that 1 row was affected.
@@ -79,8 +94,8 @@ Switch back to the query pane containing the INSERT statement, and replace it wi
 ```sql
 INSERT INTO SalesLT.CallLog
 VALUES
-(DATEADD(mi,-2, GETDATE()), 'adventure-works\\jillian0', 4, '710-555-0173', NULL),
-(DEFAULT, 'adventure-works\\shu0', 5, '828-555-0186', 'Called to arrange deliver of order 10987');
+(DATEADD(mi,-2, GETDATE()), 'adventure-works\jillian0', 4, '710-555-0173', NULL),
+(DEFAULT, 'adventure-works\shu0', 5, '828-555-0186', 'Called to arrange deliver of order 10987');
 ```
 
 Run the query and review the message, which should indicate that 2 rows were affected.
@@ -105,7 +120,7 @@ Switch back to the query pane containing the INSERT statement, and replace it wi
 ```sql
 INSERT INTO SalesLT.CallLog (SalesPerson, CustomerID, PhoneNumber)
 VALUES
-('adventure-works\\josé1', 10, '150-555-0127');
+('adventure-works\josé1', 10, '150-555-0127');
 
 SELECT SCOPE_IDENTITY() AS LatestIdentityInDB,
        IDENT_CURRENT('SalesLT.CallLog') AS LatestCallID;
@@ -122,7 +137,7 @@ SET IDENTITY_INSERT SalesLT.CallLog ON;
 
 INSERT INTO SalesLT.CallLog (CallID, SalesPerson, CustomerID, PhoneNumber)
 VALUES
-(20, 'adventure-works\\josé1', 11, '926-555-0159');
+(20, 'adventure-works\josé1', 11, '926-555-0159');
 
 SET IDENTITY_INSERT SalesLT.CallLog OFF;
 ```
@@ -131,11 +146,9 @@ Run the code and review the results, which should affect 1 row.
 
 Switch to the query pane containing the SELECT query and run it to validate that a new row has been inserted with the specific CallID value you specified in the INSERT statement (9).
 
----
-
 ### Update data
 
-To modify existing rows in a table, use the UPDATE statement.
+To modify existing rows in a table, use the `UPDATE` statement.
 
 On the query pane containing the INSERT statement, replace the existing code with the following code.
 
@@ -147,18 +160,18 @@ WHERE Notes IS NULL;
 
 Run the UPDATE statement and review the message, which should indicate the number of rows affected.
 
-Switch to the query pane containing the SELECT query and run it. Note that the rows that previously had NULL values for the Notes field now contain the text No notes.
+Switch to the query pane containing the SELECT query and run it. Note that the rows that previously had NULL values for the Notes field now contain the text "No notes".
 
 Switch back to the query pane containing the UPDATE statement, and replace it with the following code, which updates multiple columns.
 
 ```sql
 UPDATE SalesLT.CallLog
-SET SalesPerson = '', PhoneNumber = ''
+SET SalesPerson = '', PhoneNumber = '';
 ```
 
 Run the UPDATE statement and note the number of rows affected.
 
-Switch to the query pane containing the SELECT query and run it. Note that all rows have been updated to remove the SalesPerson and PhoneNumber fields - this emphasizes the danger of accidentally omitting a WHERE clause in an UPDATE statement.
+Switch to the query pane containing the SELECT query and run it. Note that all rows have been updated to remove the SalesPerson and PhoneNumber fields — this emphasizes the danger of accidentally omitting a WHERE clause in an UPDATE statement.
 
 Switch back to the query pane containing the UPDATE statement, and replace it with the following code, which updates the SalesLT.CallLog table based on the results of a SELECT query.
 
@@ -173,11 +186,9 @@ Run the UPDATE statement and note the number of rows affected.
 
 Switch to the query pane containing the SELECT query and run it. Note that the table has been updated using the values returned by the SELECT statement.
 
----
-
 ### Delete data
 
-To delete rows in the table, you generally use the DELETE statement; though you can also remove all rows from a table by using the TRUNCATE TABLE statement.
+To delete rows in the table, you generally use the `DELETE` statement; though you can also remove all rows from a table by using the `TRUNCATE TABLE` statement.
 
 On the query pane containing the UPDATE statement, replace the existing code with the following code.
 
@@ -200,82 +211,3 @@ Run the TRUNCATE TABLE statement and note the number of rows affected.
 
 Switch to the query pane containing the SELECT query and run it. Note that all rows have been deleted from the table.
 
----
-
-### Challenges
-
-> **Tip**: Try to determine the appropriate code for yourself. If you get stuck, suggested answers are provided at the end of this lab.
-
-#### Challenge 1: Insert products
-
-Insert a product:
-
-```sql
-INSERT INTO SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, ProductCategoryID, SellStartDate)
-VALUES
-('LED Lights', 'LT-L123', 2.56, 12.99, 37, GETDATE());
-
-SELECT SCOPE_IDENTITY();
-
-SELECT * FROM SalesLT.Product
-WHERE ProductID = SCOPE_IDENTITY();
-```
-
-Insert a new category with two products:
-
-```sql
-INSERT INTO SalesLT.ProductCategory (ParentProductCategoryID, Name)
-VALUES
-(4, 'Bells and Horns');
-
-INSERT INTO SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, ProductCategoryID, SellStartDate)
-VALUES
-('Bicycle Bell', 'BB-RING', 2.47, 4.99, IDENT_CURRENT('SalesLT.ProductCategory'), GETDATE()),
-('Bicycle Horn', 'BH-PARP', 1.29, 3.75, IDENT_CURRENT('SalesLT.ProductCategory'), GETDATE());
-
-SELECT c.Name As Category, p.Name AS Product
-FROM SalesLT.Product AS p
-JOIN SalesLT.ProductCategory as c
-    ON p.ProductCategoryID = c.ProductCategoryID
-WHERE p.ProductCategoryID = IDENT_CURRENT('SalesLT.ProductCategory');
-```
-
-#### Challenge 2: Update products
-
-Update product prices:
-
-```sql
-UPDATE SalesLT.Product
-SET ListPrice = ListPrice * 1.1
-WHERE ProductCategoryID =
-    (SELECT ProductCategoryID
-     FROM SalesLT.ProductCategory
-     WHERE Name = 'Bells and Horns');
-```
-
-Discontinue products:
-
-```sql
-UPDATE SalesLT.Product
-SET DiscontinuedDate = GETDATE()
-WHERE ProductCategoryID = 37
-AND ProductNumber <> 'LT-L123';
-```
-
-#### Challenge 3: Delete products
-
-Delete a product category and its products:
-
-```sql
-DELETE FROM SalesLT.Product
-WHERE ProductCategoryID =
-    (SELECT ProductCategoryID
-     FROM SalesLT.ProductCategory
-     WHERE Name = 'Bells and Horns');
-
-DELETE FROM SalesLT.ProductCategory
-WHERE ProductCategoryID =
-    (SELECT ProductCategoryID
-     FROM SalesLT.ProductCategory
-     WHERE Name = 'Bells and Horns');
-```
