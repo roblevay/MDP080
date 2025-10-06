@@ -1,6 +1,8 @@
-# Querying Data with Microsoft Transact-SQL
+# Lab 2
 
-## Lab 2
+## Querying Data with Microsoft Transact-SQL
+
+
 
 Sort and Filter Query Results
 
