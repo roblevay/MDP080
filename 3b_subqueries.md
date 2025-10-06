@@ -1,6 +1,6 @@
 ## Lab 3b
 
-Use Subqueries
+## Use Subqueries
 
 In this exercise, you'll use subqueries to retrieve data from tables in the AdventureWorks database.
 
