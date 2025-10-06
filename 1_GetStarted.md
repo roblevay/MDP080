@@ -1,6 +1,4 @@
 
-Querying Data with Microsoft Transact-SQL  
-15 Hr 41 Min Remaining  
 
 # Lab 1  
 ## Get Started with Transact-SQL
@@ -13,7 +11,7 @@ In this exercise, you will use some basic SELECT queries to retrieve data from t
 
 The SELECT statement is the primary Transact-SQL statement used to query tables in a database.
 
-Open a query editor for your AdventureWorks database, and create a new query.
+Start SQL Server Management Studio and connect to the server North. Open a query editor for your AdventureWorks database, and create a new query.
 
 In the query editor, enter the following code:
 
