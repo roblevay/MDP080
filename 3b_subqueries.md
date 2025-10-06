@@ -1,4 +1,4 @@
-## Lab 3b
+# Lab 3b
 
 ## Use Subqueries
 
