@@ -2,9 +2,9 @@
 
 ## Use Subqueries
 
-In this exercise, you'll use subqueries to retrieve data from tables in the AdventureWorks database.
+In this exercise, you'll use subqueries to retrieve data from tables in the AdventureworksLT database.
 
-> **Note**: This exercise assumes you have created the sample AdventureWorks database.
+> **Note**: This exercise assumes you have created the sample AdventureworksLT database.
 
 ---
 
@@ -12,7 +12,7 @@ In this exercise, you'll use subqueries to retrieve data from tables in the Adve
 
 A subquery is a query that is nested within another query. The subquery is often referred to as the inner query, and the query within which it is nested is referred to as the outer query.
 
-Open a query editor for your AdventureWorks database, and create a new query.
+Open a query editor for your AdventureworksLT database, and create a new query.
 
 In the query editor, enter the following code:
 
