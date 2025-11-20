@@ -1,15 +1,15 @@
 # Lab 3a  
 ## Query Multiple Tables with Joins  
-In this exercise, you'll use the Transact-SQL `SELECT` statement to query multiple tables in the AdventureWorks database.
+In this exercise, you'll use the Transact-SQL `SELECT` statement to query multiple tables in the AdventureworksLT database.
 
-> **Note:** This exercise assumes you have created the sample AdventureWorks database.
+> **Note:** This exercise assumes you have created the sample AdventureworksLT database.
 
 ---
 
 ### Use inner joins  
 An inner join is used to find related data in two tables. For example, suppose you need to retrieve data about a product and its category from the `SalesLT.Product` and `SalesLT.ProductCategory` tables. You can find the relevant product category record for a product based on its `ProductCategoryID` field; which is a foreign-key in the product table that matches a primary key in the product category table.
 
-Open a query editor for your AdventureWorks database, and create a new query.
+Open a query editor for your AdventureworksLT database, and create a new query.
 
 In the query editor, enter the following code:
 
