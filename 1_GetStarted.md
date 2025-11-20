@@ -3,15 +3,15 @@
 # Lab 1  
 ## Get Started with Transact-SQL
 
-In this exercise, you will use some basic SELECT queries to retrieve data from the AdventureWorks database.
+In this exercise, you will use some basic SELECT queries to retrieve data from the AdventureworksLT database.
 
-**Note:** This exercise assumes you have created the sample AdventureWorks database.
+**Note:** This exercise assumes you have created the sample AdventureworksLT database.
 
 ### Use SELECT queries to retrieve data
 
 The SELECT statement is the primary Transact-SQL statement used to query tables in a database.
 
-Start SQL Server Management Studio and connect to the server North. Open a query editor for your AdventureWorks database, and create a new query.
+Start SQL Server Management Studio and connect to the server North. Open a query editor for your AdventureworksLT database, and create a new query.
 
 In the query editor, enter the following code:
 
