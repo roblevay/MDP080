@@ -6,9 +6,9 @@
 
 Sort and Filter Query Results
 
-In this exercise, you'll use the Transact-SQL SELECT statement to query and filter data in the AdventureWorks database.
+In this exercise, you'll use the Transact-SQL SELECT statement to query and filter data in the AdventureworksLT database.
 
-> **Note**: This exercise assumes you have created the sample AdventureWorks database.
+> **Note**: This exercise assumes you have created the sample AdventureworksLT database.
 
 ---
 
@@ -16,7 +16,7 @@ In this exercise, you'll use the Transact-SQL SELECT statement to query and filt
 
 It's often useful to sort query results into a particular order.
 
-Open a query editor for your AdventureWorks database, and create a new query.
+Open a query editor for your AdventureworksLT database, and create a new query.
 
 Type the following query to return the Name and ListPrice of all products:
 
@@ -135,7 +135,7 @@ Often, multiple rows in a table may contain the same values for a given subset o
 
 Start Azure Data Studio, and create a new query (you can do this from the File menu or on the welcome page).
 
-In the new SQLQuery\_… pane, use the Connect button to connect the query to the AdventureWorks saved connection.
+In the new SQLQuery\_… pane, use the Connect button to connect the query to the AdventureworksLT saved connection.
 
 In the query editor, enter the following code:
 
