@@ -2,9 +2,9 @@
 
 ## Use Built-in Functions
 
-In this exercise, you'll use built-in functions to retrieve and aggregate data in the AdventureWorks database.
+In this exercise, you'll use built-in functions to retrieve and aggregate data in the AdventureworksLT database.
 
-> **Note**: This exercise assumes you have created the sample AdventureWorks database.
+> **Note**: This exercise assumes you have created the sample AdventureworksLT database.
 
 ---
 
@@ -14,7 +14,7 @@ Transact-SQL provides a large number of functions that you can use to extract ad
 
 > **Tip**: We don't have enough time in this exercise to explore every function available in Transact-SQL. To learn more about the functions covered in this exercise, and more, view the Transact-SQL documentation.
 
-Open a query editor for your AdventureWorks database, and create a new query.
+Open a query editor for your AdventureworksLT database, and create a new query.
 
 In the query editor, enter the following code:
 
