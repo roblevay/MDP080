@@ -2,9 +2,9 @@
 
 ## Modify Data
 
-In this exercise, you'll insert, update, and delete data in the AdventureWorks database.
+In this exercise, you'll insert, update, and delete data in the AdventureworksLT database.
 
-> **Note**: This exercise assumes you have created the sample AdventureWorks database.
+> **Note**: This exercise assumes you have created the sample AdventureworksLT database.
 
 ---
 
@@ -12,7 +12,7 @@ In this exercise, you'll insert, update, and delete data in the AdventureWorks d
 
 You use the `INSERT` statement to insert data into a table.
 
-Open a query editor for your AdventureWorks database, and create a new query.
+Open a query editor for your AdventureworksLT database, and create a new query.
 
 In the query editor, enter the following code:
 
