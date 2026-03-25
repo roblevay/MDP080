@@ -1,4 +1,4 @@
-[[Länk till kursfiler:](https://1drv.ms/f/c/fb5c7f8b8caa2fb7/IgD9k4S9UW1HTp8YesApmZtCATYtdV6yTdYyvrARGVo2tCo?e=f0AWuP)
+[[Länk till kursfiler: 23-25 mars](https://1drv.ms/f/c/fb5c7f8b8caa2fb7/IgD9k4S9UW1HTp8YesApmZtCATYtdV6yTdYyvrARGVo2tCo?e=f0AWuP)
 
 Länk till kursmaterialet för MDP-080 på MS Learn:
 
